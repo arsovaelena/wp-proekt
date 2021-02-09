@@ -18,12 +18,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleEnumeration role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
     public User() {
     }
 
-    public User(String username, String password, RoleEnumeration role) {
+    public User(String username, String password, RoleEnumeration role, List<Order> orders) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.orders=orders;
     }
 }
