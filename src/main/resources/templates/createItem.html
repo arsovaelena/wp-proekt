@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form action="/items/add" method="POST">
+                    <input id="id" type="hidden" name="id" th:value="(${item} != null ? ${item.getId()} : '')">
+                    <div class="form-group">
+                        <label for="name">Item name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               name="name"
+                               th:value="(${item} != null ? ${item.getName()} : '')"
+                               required
+                               placeholder="Enter product name">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text"
+                               class="form-control"
+                               id="description"
+                               name="description"
+                               th:value="(${item} != null ? ${item.getDescription()} : '')"
+                               placeholder="Description">
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <input type="text"
+                                class="form-control"
+                                name="type"
+                                id="type"
+                               th:value="(${item} != null ? ${item.getType()} : '')"
+                               placeholder="Type">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="text"
+                               class="form-control"
+                               id="price"
+                               name="price"
+                               th:value="(${item} != null ? ${item.getPrice()} : '')"
+                               placeholder="Price">
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="text"
+                               class="form-control"
+                               id="image"
+                               name="image"
+                               th:value="(${item} != null ? ${item.getImage()} : '')"
+                               placeholder="Image">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/items">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
 
-</body>
-</html>
+
+</th:block>

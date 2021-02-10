@@ -2,10 +2,9 @@ package mk.ukim.finki.wpproekt.model;
 
 
 import lombok.Data;
-import mk.ukim.finki.wpproekt.enumerations.RoleEnumeration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import mk.ukim.finki.wpproekt.model.RoleEnumeration;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,8 +31,7 @@ public class User implements UserDetails {
     private boolean isAccountNonLocked = true;
     private boolean isCredentialsNonExpired = true;
     private boolean isEnabled = true;
-
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private RoleEnumeration role;
 
 
@@ -51,8 +49,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+            return Collections.singletonList(role);
+        }
+
 
     @Override
     public String getPassword() {

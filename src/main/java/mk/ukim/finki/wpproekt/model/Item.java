@@ -20,14 +20,64 @@ public class Item {
 
     private int price;
 
+    private String image;
+
     public Item() {
     }
 
-    public Item(Long id, String name, String description, TypeEnumeration type, int price) {
-        this.id = id;
+    public Item(String name, String description, TypeEnumeration type, int price, String image) {
         this.name = name;
         this.description = description;
         this.type = type;
         this.price = price;
+        this.image = image;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public TypeEnumeration getType() {
+        return type;
+    }
+
+    public void setType(TypeEnumeration type) {
+        this.type = type;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
