@@ -11,4 +11,9 @@ public interface OrderService {
     OrderItem create(User user, Item item);
     List<OrderItem> findAll();
     Optional<OrderItem> findById(Long id);
+    void deleteById(Long id);
+    List<String> usersThatOrdered();
+    List<OrderItem> findAllByUserAndStatus(String username, boolean status);
+    OrderItem save(OrderItem orderItem);
+    void deleteAllByUser(String username);
 }

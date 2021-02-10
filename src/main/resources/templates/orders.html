@@ -18,7 +18,6 @@
     }
 </style>
 <body>
-<form action="/orders/served-order">
     <div class="container mb-4">
         <div class="row">
             <b style="font-size: 50px"><i>ALL ORDERS</i></b>
@@ -41,22 +40,13 @@
                             <td th:text="${item.getStatus()}"></td>
 
                             <td class="text-right">
-                                <input type="checkbox" name="order" th:value="${item.getId()}">
-
                                 <th:block>
-                                    <form th:action="@{'/items/delete/{id}' (id=${item.getId()})}"
+                                    <form th:action="@{'/orders/delete/{id}' (id=${item.getId()})}"
                                           th:method="DELETE">
                                         <button type="submit"
                                                 class="btn btn-sm btn-danger delete-product">
-                                            <i class="fa fa-trash">Delete</i>
+                                            <i class="fa fa-trash">CANCEL ORDER</i>
                                         </button>
-                                    </form>
-                                </th:block>
-                                <th:block >
-                                    <a th:href="@{'/items/edit-form/{id}' (id=${item.getId()})}"
-                                       class="btn btn-sm btn-info edit-product">
-                                        <i class="fa fa-trash">Edit</i>
-                                    </a>
                                 </th:block>
                             </td>
                         </tr>
@@ -66,7 +56,37 @@
             </div>
         </div>
     </div>
-    <button type="submit" style="margin-left: 45%" class="btn btn-success">Serve the order</button>
+</form>
+<form action="/orders/served-order">
+    <div class="container mb-4">
+        <div class="row">
+            <b style="font-size: 50px"><i>USERS WITH ACTIVE ORDERS</i></b>
+            <div class="col-12" th:if="${users.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${users}" class="order">
+                            <td th:text="${item}"></td>
+                            <td>
+                                To pay:<input type="checkbox" name="username" th:value="${item}">
+                            </td>
+                            <td th:text="${param.suma}"></td>
+                            </td>
+                            <td>
+                                User paid:<input type="checkbox" name="paid" value="yes">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" style="margin-left: 45%" class="btn btn-success">Charge the order</button>
 </form>
 </body>
 </html>

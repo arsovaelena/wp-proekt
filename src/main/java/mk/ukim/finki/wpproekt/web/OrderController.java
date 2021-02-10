@@ -10,10 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +34,9 @@ public class OrderController {
         List<OrderItem> orderItemList = this.orderService.findAll();
         model.addAttribute("orderList", orderItemList);
         model.addAttribute("bodyContent", "orders");
+
+        List<String> users = this.orderService.usersThatOrdered();
+        model.addAttribute("users", users);
         return "master-template";
     }
 
@@ -55,14 +55,38 @@ public class OrderController {
         Item itemObj = this.itemService.findById(item).get();
         this.orderService.create(user,itemObj);
 
-        return "redirect:/orders";
+        return "redirect:/items";
     }
 
     @GetMapping("/served-order")
-    public String orderDone(@RequestParam Long order)
+    public String orderDone(@RequestParam(required = false) String username,
+                            @RequestParam(required = false) String paid)
     {
-        OrderItem orderObj = this.orderService.findById(order).get();
-        orderObj.setStatus(false);
+        if(username!=null && paid == null)
+        {
+            List<OrderItem> userOrders = this.orderService.findAllByUserAndStatus(username, true);
+            int suma = 0;
+
+            userOrders.forEach((order)->order.setStatus(false));
+            userOrders.forEach(orderService::save);
+
+            suma = userOrders.stream().mapToInt(order->order.getItem().getPrice()).sum();
+
+
+            return "redirect:/orders?suma="+suma;
+        }
+        else if(username!=null && paid.equals("yes"))
+        {
+            this.orderService.deleteAllByUser(username);
+            return "redirect:/orders";
+        }
+        else
+            return "redirect:/orders";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        this.orderService.deleteById(id);
         return "redirect:/orders";
     }
 }

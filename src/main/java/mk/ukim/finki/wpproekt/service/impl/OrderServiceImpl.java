@@ -7,6 +7,7 @@ import mk.ukim.finki.wpproekt.repository.OrderRepository;
 import mk.ukim.finki.wpproekt.service.OrderService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,31 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Optional<OrderItem> findById(Long id) {
         return this.orderRepository.findById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.orderRepository.deleteById(id);
+    }
+
+    @Override
+    public List<String> usersThatOrdered() {
+        return this.orderRepository.findAllUsersThatOrdered();
+    }
+
+    @Override
+    public List<OrderItem> findAllByUserAndStatus(String username, boolean status) {
+        return this.orderRepository.findAllByUser_UsernameAndStatus(username, status);
+    }
+
+    @Override
+    public OrderItem save(OrderItem orderItem) {
+        return this.orderRepository.save(orderItem);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllByUser(String username) {
+        this.orderRepository.deleteAllByUser_Username(username);
     }
 }
