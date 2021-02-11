@@ -10,6 +10,7 @@ import mk.ukim.finki.wpproekt.repository.UserRepository;
 import mk.ukim.finki.wpproekt.service.GradeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,10 +27,10 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Optional<Grade> create(String username, Long itemId, Character gradeChar) {
+    public Optional<Grade> create(String username, Long itemId, String gradeChar) {
         User user = this.userRepository.findByUsername(username).get();
         Item item = this.itemRespository.findById(itemId).get();
-        Grade grade = new Grade(user,item,gradeChar);
+        Grade grade = new Grade(user,item,gradeChar.charAt(0));
         return Optional.of(this.gradeRepository.save(grade));
     }
 
@@ -50,5 +51,10 @@ public class GradeServiceImpl implements GradeService {
     @Override
     public Optional<Optional<Grade>> findById(Long id) {
         return Optional.of(this.gradeRepository.findById(id));
+    }
+
+    @Override
+    public List<Grade> findAllByItemId(Long id) {
+        return this.gradeRepository.findAllByItem_Id(id);
     }
 }

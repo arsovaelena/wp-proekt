@@ -29,7 +29,7 @@ public class Menu {
         return user;
     }
 
-    public Item getItemList() {
+    public Item getItem() {
         return item;
     }
 

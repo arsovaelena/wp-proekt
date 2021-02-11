@@ -10,6 +10,7 @@ import mk.ukim.finki.wpproekt.repository.UserRepository;
 import mk.ukim.finki.wpproekt.service.CommentService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,6 @@ public class CommentServiceImpl implements CommentService {
         Item item = this.itemRespository.findById(itemId).get();
         CommentItem commentItem = new CommentItem(user, item, comment);
         return Optional.of(this.commentRepository.save(commentItem));
-
     }
 
     @Override
@@ -51,5 +51,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Optional<Optional<CommentItem>> findById(Long id) {
         return Optional.of(this.commentRepository.findById(id));
+    }
+
+    @Override
+    public List<CommentItem> findAllByItemId(Long id) {
+        return this.commentRepository.findAllByItem_Id(id);
     }
 }

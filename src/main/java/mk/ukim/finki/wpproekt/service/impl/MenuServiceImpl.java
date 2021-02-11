@@ -9,6 +9,7 @@ import mk.ukim.finki.wpproekt.repository.UserRepository;
 import mk.ukim.finki.wpproekt.service.MenuService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +43,10 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Optional<Menu> findById(Long id) {
         return Optional.of(this.menuRepository.findById(id).get());
+    }
+
+    @Override
+    public List<Menu> findAllByUsername(String username) {
+        return this.menuRepository.findAllByUser_Username(username);
     }
 }

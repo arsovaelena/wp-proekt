@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <button class="btn btn-light"> <a href="/your-menu">See your favorite stuff!</a></button>
+        <form action="/add/menu" method="POST">
+                    <div class="row">
+                        <div class="col-3 col-offset-3" th:each="item : ${items}">
+                            <div class="card profile" style="width: 18rem;">
+                                <img class="card-img-top" th:src="${item.getImage()}" width="200" height="200">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${item.getName()}"></h5>
+                                    <p class="card-text">
+                                        <b><i>Price:</i></b><p th:text="${item.getPrice()}"></p><br>
+                                         <b><i>Description:</i></b><p th:text="${item.getDescription()}"></p><br>
+                                         <b><i>Type:</i></b><p th:text="${item.getType()}"></p><br>
+                                    </p>
+                                    <button type="submit" th:value="${item.getId()}" name="item" class="btn btn-success">Add to your menu</button><br>
+                                    <a th:href="@{'/comments/{id}/create' (id=${item.getId()})}"  class="btn btn-info">Leave a comment</a><br>
+                                    <a th:href="@{'/grades/{id}/create' (id=${item.getId()})}" class="btn btn-warning">Rate this item!</a><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>

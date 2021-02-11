@@ -1,0 +1,98 @@
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+<th:block xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <button class="btn btn-light"> <a href="/your-menu">See your favorite stuff!</a></button>
+        <div class="row">
+            <div class="col-6">
+                <div class="card profile" style="width: 18rem;">
+                    <img class="card-img-top" th:src="${item.getImage()}" width="200" height="200">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${item.getName()}"></h5>
+                        <p class="card-text">
+                            <b><i>Price:</i></b><p th:text="${item.getPrice()}"></p><br>
+                        <b><i>Description:</i></b><p th:text="${item.getDescription()}"></p><br>
+                        <b><i>Type:</i></b><p th:text="${item.getType()}"></p><br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <br><br><br>
+            <div class="col-6">
+                <form th:action="@{'/grades/{id}/add' (id=${item.getId()})}" method="POST">
+                    <h5>Hey, </h5><h5 th:text="${user.getName()}"></h5>
+                    <i><h3>Your grade here...</h3></i>
+                    <select name="grade">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                    </select>
+                    <input type="hidden" name="username" th:value="${user.getUsername()}">
+                    <input type="submit" value="Submit grade">
+                </form>
+                <br>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <h3>Grade section</h3>
+                    <table class="table table-bordered table-striped mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Grade</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="grade : ${grades}">
+                            <td th:text="${grade.getUser().getUsername()}"></td>
+                            <td th:if="${grade.getGrade()}=='A'">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </td>
+                            <td th:if="${grade.getGrade()}=='B'">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </td>
+                            <td th:if="${grade.getGrade()}=='C'">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </td>
+                            <td th:if="${grade.getGrade()}=='D'">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                            </td>
+                            <td th:if="${grade.getGrade()}=='E'">
+                                <span class="fa fa-star checked"></span>
+                            </td>
+                            <td th:if="${grade.getGrade()}=='F'">
+                                <span>0 stars!</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+    </div>
+</th:block>
+</html>

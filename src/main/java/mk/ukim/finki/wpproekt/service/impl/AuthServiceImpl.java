@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import mk.ukim.finki.wpproekt.model.RoleEnumeration;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -47,6 +49,11 @@ public class AuthServiceImpl implements AuthService {
             throw new UsernameAlreadyExistsException(username);
         User user = new User(username,passwordEncoder.encode(password),name,surname,role);
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAllByRole(RoleEnumeration role) {
+        return this.userRepository.findAllByRole(role);
     }
 
 }

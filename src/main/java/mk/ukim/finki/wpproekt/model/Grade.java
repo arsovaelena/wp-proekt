@@ -63,6 +63,6 @@ public class Grade {
     public Grade(User user, Item item, Character gradeChar) {
         this.user = user;
         this.item = item;
-        this.grade = grade;
+        this.grade = gradeChar;
     }
 }
