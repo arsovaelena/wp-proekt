@@ -1,4 +1,4 @@
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <style>
     .my-custom-scrollbar {
         position: relative;
@@ -9,7 +9,7 @@
         display: block;
     }
 </style>
-<th:block xmlns:th="http://www.thymeleaf.org">
+
     <div class="container">
         <button class="btn btn-light"> <a href="/your-menu">See your favorite stuff!</a></button>
             <div class="row">
@@ -27,7 +27,7 @@
                   </div>
               </div>
                 <br><br><br>
-                <div class="col-6">
+                <div class="col-6" sec:authorize="hasRole('ROLE_GUEST')">
                     <form th:action="@{'/comments/{id}/add' (id=${item.getId()})}" method="POST">
                         <h5>Hey, </h5><h5 th:text="${user.getName()}"></h5>
                         <i><h3>Write your comment here...</h3></i>
@@ -55,9 +55,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+
     </div>
-    </div>
-    </div>
-</th:block>
+
 </html>
