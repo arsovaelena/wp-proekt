@@ -1,6 +1,7 @@
 <html>
 <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"  rel="stylesheet"  type='text/css'>
 <th:block xmlns:th="http://www.thymeleaf.org">
+    <a class="btn btn-light" href="/profiles/create">Add new employee</a>
     <div class="container">
         <h3>Managers</h3>
             <div class="row">
@@ -28,13 +29,19 @@
                         <p class="card-text">
                             <b><i>Role:</i></b><p th:text="${employee.getRole()}"></p><br>
                         </p>
-                    </div>
+                            <th:block>
+                                <form th:action="@{'/profiles/delete/{id}' (id=${employee.getUsername()})}"
+                                      th:method="DELETE">
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger delete-product">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </button>
+                                </form>
+                            </th:block>
+                    </div></div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
 </th:block>
 
 </html>

@@ -56,6 +56,11 @@ public class AuthServiceImpl implements AuthService {
         return this.userRepository.findAllByRole(role);
     }
 
+    @Override
+    public void deleteById(String id) {
+        this.userRepository.deleteById(id);
+    }
+
 }
 
 

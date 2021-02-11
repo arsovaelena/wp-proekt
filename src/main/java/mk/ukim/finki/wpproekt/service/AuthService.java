@@ -12,5 +12,6 @@ public interface AuthService {
     UserDetails loadUserByUsername(String username);
     User register(String username, String password, String repeatPassword, String name, String surname, RoleEnumeration role);
     List<User> findAllByRole(RoleEnumeration role);
+    void deleteById(String id);
 
 }
