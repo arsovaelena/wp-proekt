@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block xmlns:th="http://www.thymeleaf.org">
     <div class="container">
         <div class="row">
             <div class="col-md-5">
@@ -50,7 +50,7 @@
                                th:value="(${item} != null ? ${item.getImage()} : '')"
                                placeholder="Image">
                     </div>
-                    <button id="submit" type="submit" class="btn btn-primary" >Submit</button>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
                     <a type="button" class="btn btn-primary" href="/items">Back</a>
                 </form>
             </div>
@@ -58,4 +58,4 @@
     </div>
 
 
-</html>
+</th:block>

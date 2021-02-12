@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -18,8 +20,8 @@
     }
 </style>
 <body>
-<button class="btn btn-light btn-inline" style="display: inline-block"><i class=" fa fa-envelope"></i><a href="/orders">VIEW ALL ORDERS</a></button>
-<button class="btn btn-light btn-inline" style="display: inline-block"><i class=" fa fa-envelope"></i><a href="/create-form/menu" sec:authorize="hasRole('ROLE_GUEST')">CREATE FAVORITE MENU</a></button>
+<button class="btn btn-light btn-inline" sec:authorize="hasAuthority('EMPLOYEE')" style="display: inline-block"><i class=" fa fa-envelope"></i><a href="/orders">VIEW ALL ORDERS</a></button>
+<button class="btn btn-light btn-inline" sec:authorize="hasAuthority('GUEST')" style="display: inline-block"><i class=" fa fa-envelope"></i><a href="/create-form/menu">CREATE FAVORITE MENU</a></button>
 <form action="/orders/create-order">
     <div class="container mb-4">
         <div class="row">
@@ -44,12 +46,13 @@
                             <td><img th:src="${item.getImage()}" width="200" height="200"></td>
 
                             <td class="text-right">
-                                <input type="checkbox" name="item" th:value="${item.getId()}">
+                                <input type="checkbox" sec:authorize="hasAuthority('EMPLOYEE')" name="item" th:value="${item.getId()}">
 
                                 <th:block>
                                     <form th:action="@{'/items/delete/{id}' (id=${item.getId()})}"
                                           th:method="DELETE">
                                         <button type="submit"
+                                                sec:authorize="hasAuthority('MANAGER')"
                                                 class="btn btn-sm btn-danger delete-product">
                                             <i class="fa fa-trash">Delete</i>
                                         </button>
@@ -57,7 +60,8 @@
                                 </th:block>
                                 <th:block >
                                     <a th:href="@{'/items/edit-form/{id}' (id=${item.getId()})}"
-                                       class="btn btn-sm btn-info edit-product">
+                                       class="btn btn-sm btn-info edit-product"
+                                       sec:authorize="hasAuthority('MANAGER')">
                                         <i class="fa fa-trash">Edit</i>
                                     </a>
                                 </th:block>
@@ -88,19 +92,21 @@
                             <td><img th:src="${item.getImage()}" width="200" height="200"></td>
 
                             <td class="text-right">
-                                <input type="checkbox" name="item" th:value="${item.getId()}">
+                                <input type="checkbox" sec:authorize="hasAuthority('EMPLOYEE')" name="item" th:value="${item.getId()}">
                                 <th:block>
                                     <form th:action="@{'/items/delete/{id}' (id=${item.getId()})}"
                                           th:method="DELETE">
                                         <button type="submit"
-                                                class="btn btn-sm btn-danger delete-product">
+                                                class="btn btn-sm btn-danger delete-product"
+                                                sec:authorize="hasAuthority('MANAGER')">
                                             <i class="fa fa-trash">Delete</i>
                                         </button>
                                     </form>
                                 </th:block>
                                 <th:block >
                                     <a th:href="@{'/items/edit-form/{id}' (id=${item.getId()})}"
-                                       class="btn btn-sm btn-info edit-product">
+                                       class="btn btn-sm btn-info edit-product"
+                                       sec:authorize="hasAuthority('MANAGER')">
                                         <i class="fa fa-trash">Edit</i>
                                     </a>
                                 </th:block>
@@ -131,20 +137,22 @@
                             <td><img th:src="${item.getImage()}" width="200" height="200"></td>
 
                             <td class="text-right">
-                                <input type="checkbox" name="item" th:value="${item.getId()}">
+                                <input sec:authorize="hasAuthority('EMPLOYEE')" type="checkbox" name="item" th:value="${item.getId()}">
                                 <th:block>
                                     <form th:action="@{'/items/delete/{id}' (id=${item.getId()})}"
                                           th:method="DELETE">
                                         <button type="submit"
+                                                sec:authorize="hasAuthority('MANAGER')"
                                                 class="btn btn-sm btn-danger delete-product">
-                                            <i class="fa fa-trash" sec:authorize="hasRole('ROLE_MANAGER')">Delete</i>
+                                            <i class="fa fa-trash">Delete</i>
                                         </button>
                                     </form>
                                 </th:block>
                                 <th:block >
                                     <a th:href="@{'/items/edit-form/{id}' (id=${item.getId()})}"
-                                       class="btn btn-sm btn-info edit-product">
-                                        <i class="fa fa-trash" sec:authorize="hasRole('ROLE_MANAGER')">Edit</i>
+                                       class="btn btn-sm btn-info edit-product"
+                                       sec:authorize="hasAuthority('MANAGER')">
+                                        <i class="fa fa-trash">Edit</i>
                                     </a>
                                 </th:block>
                             </td>
@@ -157,7 +165,7 @@
             <div class="col mb-3">
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
-                        <a href="/items/add-form" class="btn btn-block btn-dark add-product-btn">
+                        <a sec:authorize="hasAuthority('MANAGER')" href="/items/add-form" class="btn btn-block btn-dark add-product-btn">
                             Add new product
                         </a>
                     </div>
@@ -165,7 +173,7 @@
             </div>
         </div>
     </div>
-<button class="btn btn-success" style="margin-left: 43%" type="submit" sec:authorize="hasRole('ROLE_EMPLOYEE')">MAKE ORDER</button>
+<button class="btn btn-success" sec:authorize="hasAuthority('EMPLOYEE')" style="margin-left: 43%" type="submit">MAKE ORDER</button>
 </form>
 <br>
 <br>

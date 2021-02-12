@@ -1,6 +1,6 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block xmlns:th="http://www.thymeleaf.org">
     <div class="container">
-        <button class="btn btn-light"> <a href="/your-menu" sec:authorize="hasRole('ROLE_GUEST')" >See your favorite stuff!</a></button>
+        <button class="btn btn-light"> <a href="/your-menu">See your favorite stuff!</a></button>
         <form action="/add/menu" method="POST">
                     <div class="row">
                         <div class="col-3 col-offset-3" th:each="item : ${items}">
@@ -13,9 +13,9 @@
                                          <b><i>Description:</i></b><p th:text="${item.getDescription()}"></p><br>
                                          <b><i>Type:</i></b><p th:text="${item.getType()}"></p><br>
                                     </p>
-                                    <button type="submit" th:value="${item.getId()}" name="item" class="btn btn-success" sec:authorize="hasRole('ROLE_GUEST')">Add to your menu</button><br>
-                                    <a th:href="@{'/comments/{id}/create' (id=${item.getId()})}"  class="btn btn-info" sec:authorize="hasRole('ROLE_GUEST')">Leave a comment</a><br>
-                                    <a th:href="@{'/grades/{id}/create' (id=${item.getId()})}" class="btn btn-warning" sec:authorize="hasRole('ROLE_GUEST')">Rate this item!</a><br>
+                                    <button type="submit" th:value="${item.getId()}" name="item" class="btn btn-success">Add to your menu</button><br>
+                                    <a th:href="@{'/comments/{id}/create' (id=${item.getId()})}"  class="btn btn-info">Leave a comment</a><br>
+                                    <a th:href="@{'/grades/{id}/create' (id=${item.getId()})}" class="btn btn-warning">Rate this item!</a><br>
                                 </div>
                             </div>
                         </div>
@@ -24,4 +24,4 @@
             </div>
         </div>
     </div>
-</html>
+</th:block>

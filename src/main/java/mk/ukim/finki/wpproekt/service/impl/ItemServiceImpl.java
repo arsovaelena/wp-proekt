@@ -7,6 +7,7 @@ import mk.ukim.finki.wpproekt.repository.ItemRespository;
 import mk.ukim.finki.wpproekt.service.ItemService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,9 +50,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         this.itemRespository.deleteById(id);
-
     }
 
     public Optional<Item> findById(Long id) {
