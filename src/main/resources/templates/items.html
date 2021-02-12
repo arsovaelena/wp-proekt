@@ -13,6 +13,17 @@
     <title>Cafe Manager</title>
 </head>
 <style>
+    .zoom {
+        padding: 50px;
+        transition: transform .2s; /* Animation */
+        width: 270px;
+        height: 270px;
+        margin: 0 auto;
+    }
+
+    .zoom:hover {
+        transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
     a{
         color: white;
         background-color: transparent;
@@ -25,7 +36,7 @@
 <form action="/orders/create-order">
     <div class="container mb-4">
         <div class="row">
-            <b style="font-size: 50px"><i>FOOD</i></b>
+            <b style="font-size: 50px; font-family: 'Times New Roman',cursive; margin-left: 45%"><i>FOOD</i></b>
             <div class="col-12" th:if="${food.size() > 0}">
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -43,7 +54,7 @@
                             <td th:text="${item.getName()}"></td>
                             <td th:text="${item.getPrice()}"></td>
                             <td th:text="${item.getDescription()}"></td>
-                            <td><img th:src="${item.getImage()}" width="200" height="200"></td>
+                            <td><img class="zoom" th:src="${item.getImage()}" width="200" height="200"></td>
 
                             <td class="text-right">
                                 <input type="checkbox" sec:authorize="hasAuthority('EMPLOYEE')" name="item" th:value="${item.getId()}">
@@ -73,7 +84,7 @@
             </div>
         </div>
         <div class="row">
-            <b style="font-size: 50px"><i>DRINK</i></b>
+            <b style="font-size: 50px; font-family: 'Times New Roman',cursive; margin-left: 45%"><i>DRINK</i></b>
             <div class="col-12" th:if="${drink.size() > 0}">
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -89,7 +100,7 @@
                             <td th:text="${item.getName()}"></td>
                             <td th:text="${item.getPrice()}"></td>
                             <td th:text="${item.getDescription()}"></td>
-                            <td><img th:src="${item.getImage()}" width="200" height="200"></td>
+                            <td><img class="zoom" th:src="${item.getImage()}" width="200" height="200"></td>
 
                             <td class="text-right">
                                 <input type="checkbox" sec:authorize="hasAuthority('EMPLOYEE')" name="item" th:value="${item.getId()}">
@@ -118,7 +129,7 @@
             </div>
         </div>
         <div class="row">
-            <b style="font-size: 50px"><i>DESSERT</i></b>
+            <b style="font-size: 50px; font-family: 'Times New Roman',cursive; margin-left: 45%"><i>DESSERT</i></b>
             <div class="col-12" th:if="${desert.size() > 0}">
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -134,7 +145,7 @@
                             <td th:text="${item.getName()}"></td>
                             <td th:text="${item.getPrice()}"></td>
                             <td th:text="${item.getDescription()}"></td>
-                            <td><img th:src="${item.getImage()}" width="200" height="200"></td>
+                            <td><img class="zoom" th:src="${item.getImage()}" width="200" height="200"></td>
 
                             <td class="text-right">
                                 <input sec:authorize="hasAuthority('EMPLOYEE')" type="checkbox" name="item" th:value="${item.getId()}">
