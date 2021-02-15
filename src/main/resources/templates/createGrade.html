@@ -4,6 +4,64 @@
 <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-base.min.js" type="text/javascript"></script>
 <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-core.min.js"></script>
 <script src="https://cdn.anychart.com/releases/8.9.0/js/anychart-scatter.min.js"></script>
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<!-- Include fusion theme -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+<script type="text/javascript"  th:inline="javascript">
+
+    var numA =  [[${numA}]];
+    var numB =  [[${numB}]];
+    var numC =  [[${numC}]];
+    var numD =  [[${numD}]];
+    var numE =  [[${numE}]];
+    var numF =  [[${numF}]];
+
+    var chartData = [{
+        "label": "A",
+        "value": numA
+    }, {
+        "label": "B",
+        "value": numB
+    }, {
+        "label": "C",
+        "value": numC
+    }, {
+        "label": "D",
+        "value": numD
+    }, {
+        "label": "E",
+        "value": numE
+    }, {
+        "label": "F",
+        "value": numF
+    }];
+
+    //STEP 3 - Chart Configurations
+    const chartConfig = {
+        type: 'pie2d',
+        renderAt: 'chart-container',
+        width: '600',
+        height: '400',
+        dataFormat: 'json',
+        dataSource: {
+            // Chart Configuration
+            "chart": {
+                "caption": "Grades",
+                "subCaption": "Each grade with its percentages",
+                "xAxisName": "Grade",
+                "yAxisName": "Percentage",
+                "theme": "fusion",
+            },
+            // Chart Data
+            "data": chartData
+        }
+    };
+    FusionCharts.ready(function(){
+        var fusioncharts = new FusionCharts(chartConfig);
+        fusioncharts.render();
+    });
+
+</script>
 <style>
     .my-custom-scrollbar {
         position: relative;
@@ -20,7 +78,7 @@
     }
 
     text {
-        color: black important!;
+        color: black;
         font-size: 15px;
     }
 </style>
@@ -101,30 +159,10 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div id="test"></div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-         anychart.onDocumentReady(function() {
-            // the data
-            var data = {
-                header: ["Grade", "Percentage"],
-                rows: [
-                    ["A", 1500],
-                    ["B", 87000],
-                    ["C", 175000],
-                    ["D", 10000],
-                    ["E", 242000],
-                    ["F", 25000],
-                ]};
-        });
-        var chart = anychart.bar();
+<div id="chart-container">FusionCharts XT will load here!</div>
 
-        // add the data
-        chart.data(data);
-        chart.container('test');
-        chart.draw();
-    </script>
 </html>

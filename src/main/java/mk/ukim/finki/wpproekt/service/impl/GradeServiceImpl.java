@@ -57,4 +57,9 @@ public class GradeServiceImpl implements GradeService {
     public List<Grade> findAllByItemId(Long id) {
         return this.gradeRepository.findAllByItem_Id(id);
     }
+
+    @Override
+    public List<Grade> findAllByGradeAndItem_Id(Character grade, Long id) {
+        return this.gradeRepository.findAllByGradeAndItem_Id(grade, id);
+    }
 }

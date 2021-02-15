@@ -12,4 +12,5 @@ public interface GradeService {
     Optional<Grade> delete(Long id);
     Optional<Optional<Grade>> findById(Long id);
     List<Grade> findAllByItemId(Long id);
+    List<Grade> findAllByGradeAndItem_Id(Character grade, Long id);
 }
