@@ -20,18 +20,18 @@ public class OrderItem {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Item item;
+    @ManyToMany
+    private List<Item> items;
 
     private boolean status;
 
     public OrderItem() {
     }
 
-    public OrderItem(User user, Item item) {
+    public OrderItem(User user, List<Item> items) {
         this.dateCreated = LocalDateTime.now();
         this.user = user;
-        this.item = item;
+        this.items = items;
         this.status = true;
     }
 
@@ -59,12 +59,12 @@ public class OrderItem {
         this.user = user;
     }
 
-    public Item getItem() {
-        return item;
+    public List<Item> getItem() {
+        return items;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItem(List<Item> items) {
+        this.items = items;
     }
 
     public boolean getStatus() {

@@ -3,6 +3,7 @@ package mk.ukim.finki.wpproekt.service.impl;
 import mk.ukim.finki.wpproekt.model.Item;
 import mk.ukim.finki.wpproekt.model.OrderItem;
 import mk.ukim.finki.wpproekt.model.User;
+import mk.ukim.finki.wpproekt.repository.ItemRespository;
 import mk.ukim.finki.wpproekt.repository.OrderRepository;
 import mk.ukim.finki.wpproekt.service.OrderService;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,17 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     public final OrderRepository orderRepository;
+    public final ItemRespository itemRespository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, ItemRespository itemRespository) {
         this.orderRepository = orderRepository;
+        this.itemRespository = itemRespository;
     }
 
     @Override
-    public OrderItem create(User user, Item item) {
-        return this.orderRepository.save(new OrderItem(user,item));
+    public OrderItem create(User user, List<Long> itemIds) {
+        List<Item> items = this.itemRespository.findAllById(itemIds);
+        return this.orderRepository.save(new OrderItem(user,items));
     }
 
     @Override
