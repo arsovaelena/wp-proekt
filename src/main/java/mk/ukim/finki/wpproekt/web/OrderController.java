@@ -22,13 +22,11 @@ public class OrderController {
     private final AuthService authService;
     private final ItemService itemService;
     private final OrderService orderService;
-    private final ItemRespository itemRespository;
 
-    public OrderController(AuthService authService, ItemService itemService, OrderService orderService, ItemRespository itemRespository) {
+    public OrderController(AuthService authService, ItemService itemService, OrderService orderService) {
         this.authService = authService;
         this.itemService = itemService;
         this.orderService = orderService;
-        this.itemRespository = itemRespository;
     }
 
     @GetMapping
@@ -44,7 +42,7 @@ public class OrderController {
     }
 
     @GetMapping("/create-order")
-    public String create(@RequestParam List<Long> itemIds)
+    public String create(@RequestParam Long itemId)
     {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
@@ -55,8 +53,8 @@ public class OrderController {
         }
 
         User user = (User) this.authService.loadUserByUsername(username);
-        //List<Item> itemObj = this.itemRespository.findAllById(itemIds);
-        this.orderService.create(user,itemIds);
+        Item itemObj = this.itemService.findById(itemId).get();
+        this.orderService.create(user,itemId);
 
         return "redirect:/items";
     }
@@ -73,7 +71,7 @@ public class OrderController {
             userOrders.forEach((order)->order.setStatus(false));
             userOrders.forEach(orderService::save);
 
-            //suma = userOrders.stream().mapToInt(order->order.getItem().getPrice()).sum();
+            suma = userOrders.stream().mapToInt(order->order.getItem().getPrice()).sum();
 
 
             return "redirect:/orders?suma="+suma;

@@ -13,5 +13,5 @@ public interface ItemService {
     Optional<Item> save(String name, String description, TypeEnumeration type, int price, String image);
     void deleteById(Long id);
     Optional<Item> findById(Long id);
-
+    List<Item> findAllById(List<Long> ids);
 }

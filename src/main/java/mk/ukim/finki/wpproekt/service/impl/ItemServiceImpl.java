@@ -58,4 +58,9 @@ public class ItemServiceImpl implements ItemService {
     public Optional<Item> findById(Long id) {
         return this.itemRespository.findById(id);
     }
+
+    @Override
+    public List<Item> findAllById(List<Long> ids) {
+        return this.itemRespository.findAllById(ids);
+    }
 }
