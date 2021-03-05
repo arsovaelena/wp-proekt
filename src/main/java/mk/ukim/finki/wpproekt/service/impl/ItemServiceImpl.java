@@ -58,6 +58,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Item save(Item item) {
+        return this.itemRespository.save(item);
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id) {
         this.itemRespository.deleteById(id);

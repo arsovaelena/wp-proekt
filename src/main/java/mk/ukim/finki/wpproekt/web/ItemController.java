@@ -107,7 +107,10 @@ public class ItemController {
         Item item = this.itemService.findById(id).get();
         Ingredient ingredient = new Ingredient();
         ingredient.setName(name);
-     //   List<Item> items = ingredient.getItems();
+        List<Ingredient> ingredients = item.getIngredients();
+        ingredients.add(ingredient);
+        item.setIngredients(ingredients);
+        this.itemService.save(item);
         this.ingredientService.save(ingredient);
         this.ingredientService.addIngredientToItem(item,ingredient);
         return "redirect:/items";

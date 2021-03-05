@@ -13,7 +13,7 @@ public interface ItemService {
     Optional<Item> edit(Long id, String name, String description, TypeEnumeration type, int price, String image);
     Optional<Item> save(String name, String description, TypeEnumeration type, int price, String image);
     Optional<Item> save(String name, String description, TypeEnumeration type, int price, String image, List<Ingredient> ingredients);
-
+    Item save(Item item);
     void deleteById(Long id);
     Optional<Item> findById(Long id);
     List<Item> findAllById(List<Long> ids);
