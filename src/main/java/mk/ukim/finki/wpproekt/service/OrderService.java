@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
-    OrderItem create(User user, Long itemId);
+    OrderItem create(User user, Item item);
     List<OrderItem> findAll();
     Optional<OrderItem> findById(Long id);
     void deleteById(Long id);

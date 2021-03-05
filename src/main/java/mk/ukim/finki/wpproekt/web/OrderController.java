@@ -3,7 +3,6 @@ package mk.ukim.finki.wpproekt.web;
 import mk.ukim.finki.wpproekt.model.Item;
 import mk.ukim.finki.wpproekt.model.OrderItem;
 import mk.ukim.finki.wpproekt.model.User;
-import mk.ukim.finki.wpproekt.repository.ItemRespository;
 import mk.ukim.finki.wpproekt.service.AuthService;
 import mk.ukim.finki.wpproekt.service.ItemService;
 import mk.ukim.finki.wpproekt.service.OrderService;
@@ -42,19 +41,19 @@ public class OrderController {
     }
 
     @GetMapping("/create-order")
-    public String create(@RequestParam Long itemId)
+    public String create(@RequestParam Long item)
     {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = null;
         if (principal instanceof UserDetails) {
-           username = ((UserDetails)principal).getUsername();
+            username = ((UserDetails)principal).getUsername();
         } else {
             username = principal.toString();
         }
 
         User user = (User) this.authService.loadUserByUsername(username);
-        Item itemObj = this.itemService.findById(itemId).get();
-        this.orderService.create(user,itemId);
+        Item itemObj = this.itemService.findById(item).get();
+        this.orderService.create(user,itemObj);
 
         return "redirect:/items";
     }

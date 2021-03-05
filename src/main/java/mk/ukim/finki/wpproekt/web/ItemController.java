@@ -1,7 +1,9 @@
 package mk.ukim.finki.wpproekt.web;
 
 import mk.ukim.finki.wpproekt.enumerations.TypeEnumeration;
+import mk.ukim.finki.wpproekt.model.Ingredient;
 import mk.ukim.finki.wpproekt.model.Item;
+import mk.ukim.finki.wpproekt.service.IngredientService;
 import mk.ukim.finki.wpproekt.service.ItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,11 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final IngredientService ingredientService;
 
-
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, IngredientService ingredientService) {
         this.itemService = itemService;
+        this.ingredientService = ingredientService;
     }
 
     @GetMapping
@@ -76,4 +79,37 @@ public class ItemController {
         return "redirect:/items?error=ProductNotFound";
     }
 
+
+    @GetMapping("/{id}/ingredients")
+    public String getIngredients(@PathVariable Long id, Model model)
+    {
+        Item item = itemService.findById(id).get();
+        List<Ingredient> ingredients = ingredientService.findByItem(item);
+        model.addAttribute("item", item);
+        model.addAttribute("ingredients", ingredients);
+        model.addAttribute("bodyContent", "ingredientPage");
+        return "master-template";
+    }
+
+    @GetMapping("/{id}/ingredients/add")
+    private String addIngredient(@PathVariable Long id, Model model)
+    {
+        Item item = this.itemService.findById(id).get();
+        model.addAttribute("item", item);
+        model.addAttribute("bodyContent", "addIngredient");
+        return "master-template";
+    }
+
+    @PostMapping("/{id}/ingredients")
+    public String saveIngredient(@PathVariable Long id,
+                                 @RequestParam String name)
+    {
+        Item item = this.itemService.findById(id).get();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName(name);
+     //   List<Item> items = ingredient.getItems();
+        this.ingredientService.save(ingredient);
+        this.ingredientService.addIngredientToItem(item,ingredient);
+        return "redirect:/items";
+    }
 }

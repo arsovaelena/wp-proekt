@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IngredientRepository extends JpaRepository<Ingredient,Long> {
-    List<Ingredient> findByItems(List<Item> itemId);
+    List<Ingredient> findByItemsIn(List<Item> itemId);
+    List<Ingredient> findAllByItemsContaining(Item item);
 }

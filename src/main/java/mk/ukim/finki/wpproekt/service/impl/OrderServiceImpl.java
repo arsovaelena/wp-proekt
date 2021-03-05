@@ -1,10 +1,8 @@
 package mk.ukim.finki.wpproekt.service.impl;
 
-import mk.ukim.finki.wpproekt.exceptions.ItemNotFoundException;
 import mk.ukim.finki.wpproekt.model.Item;
 import mk.ukim.finki.wpproekt.model.OrderItem;
 import mk.ukim.finki.wpproekt.model.User;
-import mk.ukim.finki.wpproekt.repository.ItemRespository;
 import mk.ukim.finki.wpproekt.repository.OrderRepository;
 import mk.ukim.finki.wpproekt.service.OrderService;
 import org.springframework.stereotype.Service;
@@ -17,16 +15,13 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     public final OrderRepository orderRepository;
-    public final ItemRespository itemRespository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ItemRespository itemRespository) {
+    public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        this.itemRespository = itemRespository;
     }
 
     @Override
-    public OrderItem create(User user, Long itemId) {
-        Item item = this.itemRespository.findById(itemId).get();
+    public OrderItem create(User user, Item item) {
         return this.orderRepository.save(new OrderItem(user,item));
     }
 

@@ -2,6 +2,7 @@ package mk.ukim.finki.wpproekt.service.impl;
 
 import mk.ukim.finki.wpproekt.enumerations.TypeEnumeration;
 import mk.ukim.finki.wpproekt.exceptions.ItemNotFoundException;
+import mk.ukim.finki.wpproekt.model.Ingredient;
 import mk.ukim.finki.wpproekt.model.Item;
 import mk.ukim.finki.wpproekt.repository.ItemRespository;
 import mk.ukim.finki.wpproekt.service.ItemService;
@@ -51,6 +52,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
+    public Optional<Item> save(String name, String description, TypeEnumeration type, int price, String image, List<Ingredient> ingredients) {
+        this.itemRespository.deleteByName(name);
+        return Optional.of(this.itemRespository.save(new Item(name, description, type, price, image, ingredients)));
+    }
+
+    @Override
+    @Transactional
     public void deleteById(Long id) {
         this.itemRespository.deleteById(id);
     }
@@ -61,6 +69,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findAllById(List<Long> ids) {
-        return this.itemRespository.findAllById(ids);
+        return this.itemRespository.findAllByIdIn(ids);
     }
 }

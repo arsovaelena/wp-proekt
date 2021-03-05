@@ -76,6 +76,13 @@
                                         <i class="fa fa-trash">Edit</i>
                                     </a>
                                 </th:block>
+                                <th:block>
+                                    <a th:href="@{'/items/{id}/ingredients' (id=${item.getId()})}"
+                                       class="btn btn-sm btn-info see-ingredients"
+                                        sec:authorize="hasAnyAuthority('MANAGER', 'EMPLOYEE', 'GUEST')">
+                                        See ingredients
+                                    </a>
+                                </th:block>
                             </td>
                         </tr>
                         </tbody>
